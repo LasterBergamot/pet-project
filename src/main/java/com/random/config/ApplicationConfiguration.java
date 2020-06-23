@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
+import javax.annotation.PostConstruct;
 import java.util.Objects;
 
 /*
@@ -28,8 +29,17 @@ public class ApplicationConfiguration {
     @Value("${random.max}")
     private Integer max;
 
+    private int postConstructMin;
+    private int postConstructMax;
+
     @Autowired
     private Environment environment;
+
+    @PostConstruct
+    private void postConstruct() {
+        postConstructMin = 80;
+        postConstructMax = 90;
+    }
 
     /*
          - replacement for <bean>
@@ -53,5 +63,10 @@ public class ApplicationConfiguration {
         max = Integer.parseInt(Objects.requireNonNull(environment.getProperty("random.env.max")));
 
         return new RandomService(min, max);
+    }
+
+    @Bean(name = "randomServiceWithPostConstructValues")
+    public IRandomService getRandomServiceWithPostConstructValues() {
+        return new RandomService(postConstructMin, postConstructMax);
     }
 }
