@@ -11,8 +11,13 @@ public class App {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
 
+        IRandomService randomService = (IRandomService) context.getBean("randomService");
         IRandomService randomServiceWithFields = (IRandomService) context.getBean("randomServiceWithFields");
+        IRandomService randomServiceWithEnvironment = (IRandomService) context.getBean("randomServiceWithEnvironment");
 
-        System.out.println(randomServiceWithFields.getRandomInteger());
+        System.out.println(String.format("Random number with default values [1, 10]: %d", randomService.getRandomInteger()));
+        System.out.println(String.format("Random number with constructor values [20, 30]: %d", randomService.getRandomInteger(20, 30)));
+        System.out.println(String.format("Random number with @Value values [40, 50]: %d", randomServiceWithFields.getRandomInteger()));
+        System.out.println(String.format("Random number with Environment values [60, 70]: %d", randomServiceWithEnvironment.getRandomInteger()));
     }
 }

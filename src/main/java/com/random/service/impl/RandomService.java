@@ -6,10 +6,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomService implements IRandomService {
 
-    private int min = 1;
-    private int max = 2;
+    private final int min;
+    private final int max;
 
-    public RandomService() {}
+    public RandomService() {
+        this(1, 10);
+    }
 
     public RandomService(int min, int max) {
         this.min = min;

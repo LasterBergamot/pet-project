@@ -2,10 +2,14 @@ package com.random.config;
 
 import com.random.service.IRandomService;
 import com.random.service.impl.RandomService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+
+import java.util.Objects;
 
 /*
     Goal: absolutely XML-less bean definition
@@ -24,6 +28,9 @@ public class ApplicationConfiguration {
     @Value("${random.max}")
     private Integer max;
 
+    @Autowired
+    private Environment environment;
+
     /*
          - replacement for <bean>
          - methods only
@@ -37,6 +44,14 @@ public class ApplicationConfiguration {
 
     @Bean(name = "randomServiceWithFields")
     public IRandomService getRandomServiceWithFields() {
+        return new RandomService(min, max);
+    }
+
+    @Bean(name = "randomServiceWithEnvironment")
+    public IRandomService getRandomServiceWithEnvironment() {
+        min = Integer.parseInt(Objects.requireNonNull(environment.getProperty("random.env.min")));
+        max = Integer.parseInt(Objects.requireNonNull(environment.getProperty("random.env.max")));
+
         return new RandomService(min, max);
     }
 }
