@@ -5,6 +5,11 @@ import com.random.service.IRandomService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+/*
+    - @Configuration and @Bean
+    - Environment
+    - @PostConstruct
+ */
 public class App {
 
     public static void main( String[] args ) {
