@@ -6,12 +6,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class App {
+
     public static void main( String[] args ) {
 
         ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
 
-        IRandomService randomService = (IRandomService) context.getBean("randomService");
+        IRandomService randomServiceWithFields = (IRandomService) context.getBean("randomServiceWithFields");
 
-        System.out.println(randomService.getRandomInteger(1, 10));
+        System.out.println(randomServiceWithFields.getRandomInteger());
     }
 }
